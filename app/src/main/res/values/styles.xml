@@ -1,11 +1,35 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.VitaLemon">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:windowBackground">@color/primary</item>
     </style>
+
+    <style name="Theme.VitaLemon" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.Appbar" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+    <style name="Theme.Toolbar" parent="Base.Widget.AppCompat.Light.PopupMenu.Overflow" />
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/md_white_1000</item>
+    </style>
+
+    <style name="tag_style" parent="TextAppearance.AppCompat.Small.Inverse"></style>
+
+    <style name="SearchViewstyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textAppearance">@style/tag_style</item>
+    </style>
+
 
 </resources>

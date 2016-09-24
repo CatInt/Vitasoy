@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Vitasoy</string>
+    <string name="app_name">MagnetSoy</string>
+    <string name="action_copy">COPY</string>
+    <string name="action_open">OPEN</string>
+    <string name="fab_scrolling_hide_view_behavior">com.vitasoy.catint.vitasoy.view.behavior.AutoHideFabBehavior</string>
 </resources>

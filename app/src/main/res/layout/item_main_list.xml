@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/card_inner_margin_vertical"
+    android:layout_marginEnd="@dimen/card_outer_margin_horizon"
+    android:layout_marginStart="@dimen/card_outer_margin_horizon"
+    tools:context=".VitaActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_primary"
+            android:gravity="center"
+            android:padding="@dimen/card_inner_padding">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/magnet">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/card_inner_padding"
+                    android:gravity="start"
+                    android:text="textNamettextNamettNametextNametextNametextNametextNametextName"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:gravity="center"
+                    android:maxLines="10"
+                    android:text="1024.23 GB" />
+
+                <TextView
+                    android:id="@+id/seed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_marginStart="@dimen/card_inner_padding"
+                    android:layout_toEndOf="@id/size"
+                    android:gravity="center"
+                    android:maxEms="6"
+                    android:maxLines="1"
+                    android:text="123456" />
+
+                <TextView
+                    android:id="@+id/leech"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_marginStart="@dimen/card_inner_padding"
+                    android:layout_toEndOf="@id/seed"
+                    android:gravity="center"
+                    android:maxEms="6"
+                    android:maxLines="1"
+                    android:text="123456" />
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/magnet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/card_inner_padding"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:layout_marginTop="@dimen/card_inner_padding"
+                android:background="@color/card_primary"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:src="@drawable/selector_copy_btn" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+
+        </RelativeLayout>
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/md_grey_50" />-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_secondary"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/card_inner_padding">
+
+            <TextView
+                android:id="@+id/extention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/tag_background"
+                android:text=" mkv "
+                android:textAppearance="@style/tag_style" />
+
+            <TextView
+                android:id="@+id/resolution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:layout_toEndOf="@+id/extention"
+                android:background="@drawable/tag_background"
+                android:text=" 1080p "
+                android:textAppearance="@style/tag_style" />
+
+            <TextView
+                android:id="@+id/vcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:layout_toEndOf="@+id/resolution"
+                android:background="@drawable/tag_background"
+                android:text="H265"
+                android:textAppearance="@style/tag_style" />
+
+            <TextView
+                android:id="@+id/acode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:layout_toEndOf="@id/vcode"
+                android:background="@drawable/tag_background"
+                android:text=" H265 "
+                android:textAppearance="@style/tag_style" />
+
+            <TextView
+                android:id="@+id/quality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:layout_toEndOf="@id/acode"
+                android:background="@drawable/tag_background"
+                android:text=" Bluray "
+                android:textAppearance="@style/tag_style" />
+
+            <TextView
+                android:id="@+id/ages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/card_inner_padding"
+                android:maxEms="6"
+                android:maxLines="1"
+                android:text="6months" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
