@@ -17,6 +17,7 @@ public class TorrentPage implements Parcelable {
     //result
     String msg;
     String totalPage;
+    String magnet;
     List<TorrentInfo> content;
     //request params
     String method;
@@ -73,6 +74,14 @@ public class TorrentPage implements Parcelable {
         this.totalPage = totalPage;
     }
 
+    public String getMagnet() {
+        return magnet;
+    }
+
+    public void setMagnet(String magnet) {
+        this.magnet = magnet;
+    }
+
     public List<TorrentInfo> getContent() {
         return content;
     }
@@ -80,9 +89,11 @@ public class TorrentPage implements Parcelable {
     public void setContent(List<TorrentInfo> content) {
         this.content = content;
     }
+
     protected TorrentPage(Parcel in) {
         msg = in.readString();
         totalPage = in.readString();
+        magnet = in.readString();
         content = in.createTypedArrayList(TorrentInfo.CREATOR);
         method = in.readString();
         number = in.readString();
@@ -111,6 +122,7 @@ public class TorrentPage implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(msg);
         parcel.writeString(totalPage);
+        parcel.writeString(magnet);
         parcel.writeTypedList(content);
         parcel.writeString(method);
         parcel.writeString(name);
@@ -122,8 +134,11 @@ public class TorrentPage implements Parcelable {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("\n*****TorrentPage*****\n")
+                .append("name:" + name + "\n")
+                .append("method:" + method + "\n")
                 .append("msg:" + msg + "\n")
-                .append(totalPage == null ? "" : ("totalPage:" + totalPage + "\n"));
+                .append(totalPage == null ? "" : ("totalPage:" + totalPage + "\n"))
+                .append("magnet:" + magnet + "\n");
         if (content != null) {
             builder.append("content:\n");
             for (TorrentInfo info : content) {

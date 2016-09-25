@@ -27,7 +27,7 @@ public class SearchResultFragment extends Fragment {
         return root;
     }
 
-    public void getSearchResultListAdapter(TorrentPage torrentPage) {
+    public void setSearchResult(TorrentPage torrentPage) {
         this.torrentPage = torrentPage;
         searchResultListAdapter.setResultData(torrentPage);
     }

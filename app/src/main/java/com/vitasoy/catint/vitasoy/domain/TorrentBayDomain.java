@@ -71,12 +71,12 @@ public class TorrentBayDomain {
         try {
             result = request.execute().body();
         } catch (IOException e) {
-            //TODO deal with exception with result
             result = new TorrentPage();
             result.setMsg(e.getMessage());
             e.printStackTrace();
         }
-        result.setName(dynamic.getParamsMap().get("name"));
+        result.setName(dynamic.getParamsMap().get(SearchParams.PARAM_NAME));
+        result.setMethod(dynamic.getParamsMap().get(SearchParams.PARAM_METHOD));
         Log.d(TAG, "respond:" + result.toString());
         return result;
     }
@@ -86,9 +86,8 @@ public class TorrentBayDomain {
         Call<TorrentPage> getRepos(@QueryMap Map<String, String> dynamic);
     }
 
-
-    public Subscriber<? super SearchParams> getSearchSubscriber() {
-        return mSubscriber;
+    public void getSearchResult(SearchParams p) {
+        mSubscriber.onNext(p);
     }
 
     public Observable<TorrentPage> getWorkflow() {

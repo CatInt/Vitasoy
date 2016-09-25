@@ -10,7 +10,12 @@ import java.util.Map;
  * Created by yodazone on 2016/9/24.
  */
 
-public class SearchParams implements Parcelable{
+public class SearchParams implements Parcelable {
+    public static final String PARAM_METHOD = "method";
+    public static final String PARAM_NAME = "name";
+    public static final String PARAM_NUMBER = "number";
+    public static final String PARAM_GET = "get";
+
     private Map<String, String> params = new HashMap<>();
 
     public SearchParams() {
@@ -32,22 +37,22 @@ public class SearchParams implements Parcelable{
     };
 
     public SearchParams putMethod(String method) {
-        params.put("method", method);
+        params.put(PARAM_METHOD, method);
         return this;
     }
 
     public SearchParams putName(String name) {
-        params.put("name", name);
+        params.put(PARAM_NAME, name);
         return this;
     }
 
     public SearchParams putPageNo(String pageNo) {
-        params.put("number", pageNo);
+        params.put(PARAM_NUMBER, pageNo);
         return this;
     }
 
     public SearchParams putGet(String get) {
-        params.put("get", get);
+        params.put(PARAM_GET, get);
         return this;
     }
 

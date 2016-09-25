@@ -10,15 +10,11 @@ import com.vitasoy.catint.vitasoy.SearchResultFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yodazone on 2016/9/24.
- */
-
 public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<SearchResultFragment> mSearchResultFragments = new ArrayList<>();
-    private final List<String> mSearchKeywords = new ArrayList<>();
-    private final List<SearchResultListAdapter> mSearchResultListAdapters = new ArrayList<>();
+    private final List<String> mFragmentTitle = new ArrayList<>();
+    private final List<String> mIdentitiesKey = new ArrayList<>();
 
     public SearchPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -32,7 +28,7 @@ public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mSearchKeywords.size();
+        return mIdentitiesKey.size();
     }
 
     @Override
@@ -42,22 +38,24 @@ public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mSearchKeywords.get(position);
+        return mFragmentTitle.get(position);
     }
 
-    public void addSearchResultPage(SearchResultFragment fragment, String searchKeyword) {
+    public void addSearchResultPage(SearchResultFragment fragment, String title, String key) {
         mSearchResultFragments.add(fragment);
-        mSearchKeywords.add(searchKeyword);
+        mFragmentTitle.add(title);
+        mIdentitiesKey.add(key);
     }
 
-    public SearchResultFragment findPagerByKeyword(String keyword) {
-        int index = mSearchKeywords.indexOf(keyword);
-        return mSearchResultFragments.get(index);
+    //if find none,return -1
+    public int findPageByKeyword(String keyword) {
+        return mIdentitiesKey.indexOf(keyword);
     }
 
     public void removePagerByKeyword(int index) {
         mSearchResultFragments.remove(index);
-        mSearchKeywords.remove(index);
+        mIdentitiesKey.remove(index);
+        mFragmentTitle.remove(index);
         notifyDataSetChanged();
     }
 }

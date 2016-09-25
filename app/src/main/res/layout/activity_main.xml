@@ -23,8 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:minHeight="64dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_bar"
@@ -49,18 +48,18 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="24dp"
             android:onClick="onFabClick"
-            android:src="@drawable/ic_search_white_48dp"
+            android:src="@drawable/ic_action_remove"
             app:layout_behavior="@string/fab_scrolling_hide_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
 
-    <com.lapism.searchview.SearchView
+    <com.vitasoy.catint.vitasoy.view.CustomSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         app:paddingEnd="10dp"
-        app:search_clear_on_open="false"
         app:search_clear_on_close="false"
+        app:search_clear_on_open="false"
         app:search_icon_color="@color/accent" />
 
 </FrameLayout>
