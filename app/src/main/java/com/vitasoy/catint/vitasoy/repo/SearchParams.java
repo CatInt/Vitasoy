@@ -16,6 +16,10 @@ public class SearchParams implements Parcelable {
     public static final String PARAM_NUMBER = "number";
     public static final String PARAM_GET = "get";
 
+    public static final String METHOD_KICKASS = "kick";
+    public static final String METHOD_BTSOW = "btso";
+    public static final String METHOD_BTSOW_GET = "btso_get";
+
     private Map<String, String> params = new HashMap<>();
 
     public SearchParams() {
@@ -55,6 +59,19 @@ public class SearchParams implements Parcelable {
         params.put(PARAM_GET, get);
         return this;
     }
+
+    public String getParamMethod() {
+        return params.get(PARAM_METHOD);
+    }
+
+    public String getParamName() {
+        return params.get(PARAM_NAME);
+    }
+
+    public String getParamNumber() {
+        return params.get(PARAM_NUMBER);
+    }
+
 
     public Map<String, String> getParamsMap() {
         return params;

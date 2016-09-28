@@ -91,17 +91,19 @@ public class CustomSearchView extends SearchView {
             }
             if (mCheckBoxGroup.size() > 0) {
                 mCheckBoxGroup.get(0).setChecked(true);
-                mCheckedPosition = 0;
             }
         }
     }
 
     public String getCheckedFilterTag() {
-        return (String) mCheckBoxGroup.get(mCheckedPosition).getTag();
+        for (AppCompatCheckBox v : mCheckBoxGroup){
+             if (v.isChecked())
+                 return (String) v.getTag();
+        }
+        return "";
     }
 
     private List<AppCompatCheckBox> mCheckBoxGroup = new ArrayList<>();
-    private int mCheckedPosition;
     private OnClickListener mRadiusCheckListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -111,7 +113,6 @@ public class CustomSearchView extends SearchView {
                 if (checkBox == v) {
                     checkBox.setChecked(true);
                     mSearchFiltersStates.add(true);
-                    mCheckedPosition = position;
                 } else {
                     checkBox.setChecked(false);
                     mSearchFiltersStates.add(false);

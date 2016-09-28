@@ -33,4 +33,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.lapism:searchview:3.6.3'
+    compile 'org.jsoup:jsoup:1.9.2'
 }

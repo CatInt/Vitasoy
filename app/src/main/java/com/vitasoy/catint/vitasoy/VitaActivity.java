@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -18,10 +18,11 @@ import com.lapism.searchview.SearchAdapter;
 import com.lapism.searchview.SearchHistoryTable;
 import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
-import com.vitasoy.catint.vitasoy.domain.TorrentBayDomain;
+import com.vitasoy.catint.vitasoy.domain.TorrentSearchWorkflow;
 import com.vitasoy.catint.vitasoy.repo.SearchParams;
 import com.vitasoy.catint.vitasoy.repo.TorrentPage;
 import com.vitasoy.catint.vitasoy.view.CustomSearchView;
+import com.vitasoy.catint.vitasoy.view.SearchResultFragment;
 import com.vitasoy.catint.vitasoy.view.adapter.SearchPagerAdapter;
 
 import java.util.ArrayList;
@@ -32,13 +33,10 @@ import butterknife.InjectView;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class VitaActivity extends AppCompatActivity {
+public class VitaActivity extends FragmentActivity {
 
     private static final String TAG = "VitaActivity";
-    private static final String METHOD_KICKASS = "kick";
-    private static final String METHOD_BTSOW = "btso";
-    private static final String METHOD_BTSOW_GET = "btso_get";
-//    private static final int MESSAGE_NEW_DATA = 100;
+    //    private static final int MESSAGE_NEW_DATA = 100;
 //    private static final int MESSAGE_TCP_CONNECTED = 200;
 //    private static final int MESSAGE_TCP_MESSAGE = 201;
 //    private static final int MESSAGE_PAGE_ARRIVE = 300;
@@ -72,6 +70,26 @@ public class VitaActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
     protected void onDestroy() {
         mSubscription.unsubscribe();
         super.onDestroy();
@@ -79,6 +97,7 @@ public class VitaActivity extends AppCompatActivity {
 
     private void initSearchView() {
         mSearchHistoryTable = new SearchHistoryTable(this);
+        mSearchHistoryTable.setHistorySize(5);
         if (mSearchView != null) {
             mSearchView.setVersion(SearchView.VERSION_TOOLBAR);
             mSearchView.setVersionMargins(SearchView.VERSION_MARGINS_TOOLBAR_BIG);
@@ -134,46 +153,46 @@ public class VitaActivity extends AppCompatActivity {
                 mSearchView.setAdapter(searchAdapter);
             }
             List<CustomSearchView.RadiusFilter> filters = new ArrayList<>();
-            filters.add(new CustomSearchView.RadiusFilter("KICKASS", METHOD_KICKASS));
-            filters.add(new CustomSearchView.RadiusFilter("BTSOW", METHOD_BTSOW));
+            filters.add(new CustomSearchView.RadiusFilter("KICKASS", SearchParams.METHOD_KICKASS));
+            filters.add(new CustomSearchView.RadiusFilter("BTSOW", SearchParams.METHOD_BTSOW));
             mSearchView.setRadiusFilters(filters);
         }
     }
 
     private void initTabLayout() {
         mPagerAdapter = new SearchPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.addSearchResultPage(new SearchResultFragment(), "favor", "favor");
+        SearchResultFragment favor = SearchResultFragment.newInstance();
+        mPagerAdapter.addSearchResultPage(favor, "History", "History");
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void subscribe() {
-        mSubscription = TorrentBayDomain.getInstance().getWorkflow()
-                .subscribe(new Action1<TorrentPage>() {
-                    @Override
-                    public void call(TorrentPage result) {
-                        String method = result.getMethod();
-                        String name = result.getName();
-                        if (result.getContent() == null || result.getMagnet() == null) {
-                            Snackbar.make(mViewPager, result.getMsg(), Snackbar.LENGTH_SHORT).show();
+        mSubscription = TorrentSearchWorkflow.getInstance().subscribe(new Action1<TorrentPage>() {
+            @Override
+            public void call(TorrentPage result) {
+                //deal with the search result
+                String method = result.getMethod();
+                String name = result.getName();
+                if (result.getContent() == null || result.getMagnet() == null) {
+                    Snackbar.make(mViewPager, result.getMsg(), Snackbar.LENGTH_SHORT).show();
+                }
+                switch (method) {
+                    case SearchParams.METHOD_BTSOW_GET:
+                        showMagnetAction(result.getMagnet());
+                        break;
+                    case SearchParams.METHOD_KICKASS:
+                    case SearchParams.METHOD_BTSOW:
+                    default:
+                        int page = mPagerAdapter.findPageByKeyword(method + name);
+                        if (page > -1) {
+                            SearchResultFragment fragment = mPagerAdapter.getSearchResultFragment(page);
+                            fragment.setSearchResult(result);
                         }
-                        switch (method) {
-                            case METHOD_BTSOW_GET:
-                                showMagnetAction(result.getMagnet());
-                                break;
-                            case METHOD_KICKASS:
-                            case METHOD_BTSOW:
-                            default:
-                                int page = mPagerAdapter.findPageByKeyword(method + name);
-                                if (page > -1) {
-                                    SearchResultFragment fragment = (SearchResultFragment) mPagerAdapter.getItem(page);
-                                    fragment.setSearchResult(result);
-                                }
-                                break;
-                        }
-
-                    }
-                });
+                        break;
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unused")
@@ -193,8 +212,8 @@ public class VitaActivity extends AppCompatActivity {
             showMagnetAction(url);
         } else if (url.startsWith("http")) {
             if (url.contains("btso")) {
-                TorrentBayDomain.getInstance().getSearchResult(
-                        new SearchParams().putMethod(METHOD_BTSOW_GET).putGet(url));
+                TorrentSearchWorkflow.getInstance().getSearchResult(
+                        new SearchParams().putMethod(SearchParams.METHOD_BTSOW_GET).putGet(url));
             }
         }
     }
@@ -225,12 +244,12 @@ public class VitaActivity extends AppCompatActivity {
         int page = mPagerAdapter.findPageByKeyword(keyword);
         mSearchHistoryTable.addItem(new SearchItem(query));
         if (page < 0) {
-            SearchResultFragment resultPager = new SearchResultFragment();
+            SearchResultFragment resultPager = SearchResultFragment.newInstance();
             mPagerAdapter.addSearchResultPage(resultPager, query, keyword);
             mPagerAdapter.notifyDataSetChanged();
-            page = mPagerAdapter.getCount();
+            page = mPagerAdapter.getCount()-1;
         }
-        TorrentBayDomain.getInstance().getSearchResult(new SearchParams().putName(query).putMethod(method));
+        TorrentSearchWorkflow.getInstance().getSearchResult(new SearchParams().putName(query).putMethod(method));
         mViewPager.setCurrentItem(page, true);
 
     }

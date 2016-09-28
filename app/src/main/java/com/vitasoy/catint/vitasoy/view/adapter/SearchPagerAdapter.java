@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
-import com.vitasoy.catint.vitasoy.SearchResultFragment;
+import com.vitasoy.catint.vitasoy.view.SearchResultFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<SearchResultFragment> mSearchResultFragments = new ArrayList<>();
     private final List<String> mFragmentTitle = new ArrayList<>();
-    private final List<String> mIdentitiesKey = new ArrayList<>();
+    private final List<String> mFragmentKeys = new ArrayList<>();
 
     public SearchPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -28,7 +28,7 @@ public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mIdentitiesKey.size();
+        return mFragmentTitle.size();
     }
 
     @Override
@@ -44,18 +44,22 @@ public final class SearchPagerAdapter extends FragmentStatePagerAdapter {
     public void addSearchResultPage(SearchResultFragment fragment, String title, String key) {
         mSearchResultFragments.add(fragment);
         mFragmentTitle.add(title);
-        mIdentitiesKey.add(key);
+        mFragmentKeys.add(key);
+    }
+
+    public SearchResultFragment getSearchResultFragment(int position){
+        return mSearchResultFragments.get(position);
     }
 
     //if find none,return -1
     public int findPageByKeyword(String keyword) {
-        return mIdentitiesKey.indexOf(keyword);
+        return mFragmentKeys.indexOf(keyword);
     }
 
     public void removePagerByKeyword(int index) {
         mSearchResultFragments.remove(index);
-        mIdentitiesKey.remove(index);
         mFragmentTitle.remove(index);
+        mFragmentKeys.remove(index);
         notifyDataSetChanged();
     }
 }
