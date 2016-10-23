@@ -251,7 +251,6 @@ public class VitaActivity extends FragmentActivity {
         }
         TorrentSearchWorkflow.getInstance().getSearchResult(new SearchParams().putName(query).putMethod(method));
         mViewPager.setCurrentItem(page, true);
-
     }
 
 
